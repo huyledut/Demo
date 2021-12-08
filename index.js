@@ -6,17 +6,17 @@ const handlebars = require('express-handlebars');
 const methodOverride = require('method-override');
 const app = express();
 const port = process.env.PORT || 3002;
-const route = require('./routes/index.js');
-const room = require('./app/models/Room');
+const route = require('./src/routes/index.js');
+const room = require('./src/app/models/Room');
 const http = require('http');
 const server = http.createServer(app);
 const { Server } = require('socket.io');
 const { ExpressPeerServer } = require('peer');
-const db = require('./config/db');
+const db = require('./src/config/db');
 const peerServer = ExpressPeerServer(server, { debug: true });
 const io = new Server(server);
-const socketController = require('./app/controllers/Socket_Controller');
-const hbs_Helper = require('./app/controllers/Hbs_Helper');
+const socketController = require('./src/app/controllers/Socket_Controller');
+const hbs_Helper = require('./src/app/controllers/Hbs_Helper');
 app.use(express.urlencoded({ extended: true })); //nhan du lieu tu form
 app.use(express.json()); //gui tu code js thi nhan tu thang json
 app.engine('hbs', handlebars({ extname: 'hbs', helpers: hbs_Helper.helpers }));
