@@ -1,0 +1,38 @@
+<body>
+    <div class="container mt-5 text-center">
+        <h3>PHÒNG HỌP CỦA TÔI</h3>
+    </div>
+    <hr>
+    <div class="container" style="height:100%">
+        <div id="rooms">
+            <div class='card-course-item'>
+                {{#each rooms}}
+                <div class='card card_room' style='width: 18rem;'>
+                    <a href='./rooms/{{_id}}'>
+                        <img src='{{this.img}}' class='card-img-top' alt='{{ClassName}}' />
+                    </a>
+                    <div class='card-body'>
+                        <h5 class='card-title'>{{ClassName}}</h5>
+                        <a href='./rooms/{{_id}}' class='btn btn-primary'>OPEN</a>
+                    </div>
+                    <p>{{this.count}} thành viên</p>
+                </div>
+                {{else}}
+                <div class='card card_room' style='width: 18rem;'>
+                    <a href='/me/create'>
+                        <img src='https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ2aeFn7HjedC8Z2Ohn4b375Ib0ST4N_Gm7ZjSg70WDqv2BgOWKHIt_Msy9V6ngydj5Ajc&usqp=CAU'
+                            class='card-img-top' alt='createRoom' />
+                    </a>
+                    <div class='card-body'>
+                        <h5 class='card-title'>New</h5>
+                        <a href='/me/create' class='btn btn-primary'>Tạo phòng họp</a>
+                    </div>
+                    <p>......</p>
+                </div>
+                {{/each}}
+            </div>
+        </div>
+    </div>
+    <br><br>
+
+</body>

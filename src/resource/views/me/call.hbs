@@ -1,0 +1,373 @@
+<script>
+    const username = '{{user.username}}' 
+</script>
+    <script src="https://unpkg.com/peerjs@1.3.1/dist/peerjs.min.js"></script>
+    <script src="/socket.io/socket.io.js"></script>
+    <script>
+        const roomId = '{{idRoom}}'
+        const idUser = '{{userID}}';
+    </script>
+    <body>
+        <div class="container-fluid ">
+            <div class="row container-video-call">
+                <div class="col-12" id="frameCall">
+                    <div class="video-call mt-3" id="video-grids">
+                        {{!-- <div class="card card_video">
+                            <video></video>
+                        </div>   --}}
+                        {{!-- Chưas component total video call --}}
+
+                    </div>
+                </div>
+                <div class="col-3" id="frameChat" style="display:none;">
+                    <div class="chatRealtime mt-3 mb-3" id="chatRealtimeCall">
+                    
+                       
+                    </div>
+                   <form id="chat-form-call" data-id='{{idRoom}}' data-name='{{user.username}}' data-img ='{{user.img}}' class="input-group mb-3">
+                        <input type="text" class="form-control" placeholder="Nhập tin nhắn ..." aria-label="Recipient's username" 
+                            aria-describedby="button-addon2" id="chat-mes-call" autofocus>
+                        <button class="btn btn-outline-primary" id="send-chat-call" 
+                            >GỬI</button>
+                    </form>   
+                </div>
+
+            </div>
+
+            <div class="row">
+                <div class="col-3"></div>
+                <div class="col-6 mt-2 mb-2 d-flex justify-content-center" id="list_funtion">
+                    <button type="button" class="btn_video btn_fun btn btn-outline-primary active" id="btn_video" onclick="OnOffVideo()">
+                            <i class="fas fa-video fa-lg "></i>
+                    </button>
+                    <button type="button" class="btn_mic btn_fun btn btn-outline-primary active" id="btn_mic" onclick="OnOffMic()">
+                            <i class="fas fa-microphone fa-lg"></i>
+                    </button>
+                    <button type="button" class="btn_share btn_fun btn btn-outline-primary" id="btn_share" onclick="ShareScreen()">
+                            <i class="fas fa-share-square fa-lg"></i>
+                    </button>
+                     <button type="button" class="btn_closeShare btn_fun btn btn-outline-danger" id="btn_closeShare" onclick="OffShare()">
+                            <i class="fas fa-window-close fa-lg"></i>
+                    </button>
+                    <button type="button" class="btn_mes btn_fun btn btn-outline-primary" id="btn_mes">
+                            <i class="fas fa-comment-dots fa-lg"></i>
+                    </button>
+                    <a href="/me/rooms/{{idRoom}}">
+                        <button type="button" class="btn_cancel btn_fun btn btn-outline-danger" onclick="CloseCallVideo()">
+                            <i class="fas fa-phone-slash fa-lg"></i>
+                        </button>
+                    </a>
+                </div>
+                <div class="col-3"></div>
+            </div>
+        </div>
+        </div>
+    </body>
+</html>
+
+<script>
+    const socket = io("/");
+    const videoGrids = document.getElementById("video-grids");
+    const myVideo = document.createElement("video");
+    let myVideoStream;
+    var listCurrentPeer = new Array();
+	var listObj = new Array();
+    var currentPeer = null;
+    var isShareScreen = false;
+
+    var peer = new Peer(undefined, {
+        path: "/peer",
+        host: '/',
+        port: "3002",
+    });
+
+    var myObj = function (socketId, peerId,userID, username, idRoom) {
+        this.socketId = socketId;
+        this.peerId = peerId;
+        this.useID = userID;
+        this.username = username;
+        this.idRoom = idRoom;
+    }
+    
+    peer.on("open", (id) => {
+        var objId = new myObj(socket.id, peer.id, idUser, username,roomId);
+        socket.emit("join-room", roomId, objId);
+	socket.on("list-obj", (listConnect) => {
+        	listObj = listConnect;
+    	})
+    });
+
+    const peers = {};
+
+    var getUserMedia = navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia;
+
+    navigator.mediaDevices.getUserMedia({
+        video: true,
+        audio: true,
+    }).then((stream) => {
+        myVideoStream = stream;	
+        addVideoStream(myVideo, stream, username);
+
+        socket.on("user-connected", (node) => {
+            connectToNewUser(node.peerId, stream, node.username);
+            if (isShareScreen) {
+                autoShareScreen()
+            }
+        });
+        socket.on("user-disconnected", (objId) => {
+            //console.log("userdisconnect: " + objId);
+            if (peers[objId]) {
+                peers[objId].close();
+                delete (peers[objId]);
+                //removeVideoStream(objId);      
+            }
+            removeVideoStream(objId);
+            var index = listCurrentPeer.indexOf(listCurrentPeer.find(element => element.peer == objId.peerId));
+            listCurrentPeer.splice(index, 1);
+        });
+
+    }).catch(function (err) {
+        /* handle the error */
+    });
+
+    peer.on("call", (call) => {
+        getUserMedia({ video: true, audio: true },
+            function (stream) {
+                call.answer(stream); // Answer the call with an A/V stream.
+                const video = document.createElement("video");
+                call.on("stream", function (remoteStream) {
+                    var node = listObj.find(element => element.peerId == call.peer);
+                addVideoStream(video, remoteStream, node.username);
+                //listCurrentPeer.push(call); 
+                var check = true;
+                for(var i = 0; i < listCurrentPeer.length; i++) {
+                    if(call.peer == listCurrentPeer[i].peer) {
+                        check = false;
+                        break;
+                    }
+                }
+                if(check) {
+                    //console.log(remoteStream);
+                    //addVideoStream(video, remoteStream, call.peer);
+                    listCurrentPeer.push(call);
+                }
+                });            
+            },
+            function (err) {
+                console.log("Failed to get local stream", err);
+            }
+        );
+    });
+
+    const connectToNewUser = (id, streams, yourname) => {
+        const call = peer.call(id, streams);
+        const video = document.createElement("video");
+        call.on("stream", (userVideoStream) => {
+            addVideoStream(video, userVideoStream, yourname);
+        });
+        call.on("close", () => {
+            video.remove();
+        });
+        currentPeer = call;
+        listCurrentPeer.push(call);
+        peers[id] = call;
+    };
+    const RemoveUnusedDivs = () => {
+    alldivs = videoGrids.getElementsByTagName("div");
+        for (var i = 0; i < alldivs.length; i++) {
+            e = alldivs[i].getElementsByTagName("video").length;
+            if (e == 0) {
+                alldivs[i].remove();
+            }
+        }
+    };
+
+    const addVideoStream = (videoEl, stream, name) => {
+        videoEl.srcObject = stream;
+        videoEl.addEventListener("loadedmetadata", () => {
+            videoEl.play();
+        });
+        const nameUser = document.createElement("h4");
+        const videoGrid = document.createElement("div");
+        const h1name = document.createTextNode(name);
+        nameUser.innerHTML= name;
+        nameUser.setAttribute("class", "card-title mt-2");
+        videoEl.setAttribute("class", "card-body card_video");
+        videoGrid.setAttribute("class", name + " " + "card item-video");
+        videoGrid.appendChild(nameUser);
+        videoGrid.appendChild(videoEl);
+        videoGrids.append(videoGrid);
+        RemoveUnusedDivs();
+    };
+
+    const removeVideoStream = (name) => {
+        var list_div_video = document.getElementsByClassName(name);
+        for(var i = list_div_video.length - 1; i >=0; i--) {
+            list_div_video[i].remove();
+        }
+    };
+
+
+    window.onunload = function () {
+        //console.log("userUnload: " + objId);
+        socket.emit("unload", myname)
+    }
+
+    function OnOffVideo() {
+        const enabled = myVideoStream.getVideoTracks()[0].enabled;
+        if (enabled) {
+            myVideoStream.getVideoTracks()[0].enabled = false;
+            for(var i = 0; i< listCurrentPeer.length; i++) {
+                listCurrentPeer[i].localStream.getVideoTracks()[0].enabled = false;
+            }
+        } else {
+            myVideoStream.getVideoTracks()[0].enabled = true;
+            for(var i = 0; i< listCurrentPeer.length; i++) {
+                listCurrentPeer[i].localStream.getVideoTracks()[0].enabled = true;
+            }
+        }
+    }
+
+    function OnOffMic() {
+        const enabled = myVideoStream.getAudioTracks()[0].enabled;
+        if (enabled) {
+            myVideoStream.getAudioTracks()[0].enabled = false;
+            for(var i = 0; i< listCurrentPeer.length; i++) {
+                listCurrentPeer[i].localStream.getAudioTracks()[0].enabled = false;
+            }
+        } else {
+            myVideoStream.getAudioTracks()[0].enabled = true;
+            for(var i = 0; i< listCurrentPeer.length; i++) {
+                listCurrentPeer[i].localStream.getAudioTracks()[0].enabled = true;
+            }
+        }
+    }
+
+    var screenStream = null;
+    function autoShareScreen() {
+        let videoTrack = screenStream.getVideoTracks()[0];
+        let sender = listCurrentPeer[listCurrentPeer.length - 1].peerConnection.getSenders().find(function (s) {
+            return s.track.kind == videoTrack.kind;
+        })
+        sender.replaceTrack(videoTrack)
+    }
+
+    function ShareScreen() {
+        navigator.mediaDevices.getDisplayMedia({ video: true }).then((stream) => {
+            screenStream = stream;
+            let videoTrack = screenStream.getVideoTracks()[0];
+            for(var i = 0; i< listCurrentPeer.length; i++) {
+                let sender = listCurrentPeer[i].peerConnection.getSenders().find(function (s) {
+                    return s.track.kind == videoTrack.kind;
+                })
+                sender.replaceTrack(videoTrack)
+            }
+            isShareScreen = true;
+        })
+    }
+
+    function OffShare() {
+        let videoTrack = myVideoStream.getVideoTracks()[0];
+        for(var i = 0; i< listCurrentPeer.length; i++) {
+            let sender = listCurrentPeer[i].peerConnection.getSenders().find(function (s) {
+                return s.track.kind == videoTrack.kind;
+            })
+            sender.replaceTrack(videoTrack)
+        }
+        isShareScreen = false;
+    }
+    function CloseCallVideo()
+    {  
+        window.close();
+    }
+</script>
+<script language="JavaScript">
+    document.getElementById("btn_video").addEventListener("click",function(){
+        if($(this).hasClass('active')){
+            $(this).removeClass('active')
+        } else {
+            $(this).addClass('active')
+        }
+    });
+    document.getElementById("btn_mic").addEventListener("click",function(){
+        if($(this).hasClass('active')){
+            $(this).removeClass('active')
+        } else {
+            $(this).addClass('active')
+           
+        }
+    });
+    document.getElementById("btn_share").addEventListener("click",function(){
+        if($(this).hasClass('active')){
+            $(this).removeClass('active')
+            $("#btn_closeShare").addClass('active');
+        } else {
+            $(this).addClass('active');
+            $("#btn_closeShare").removeClass('active');
+           
+        }
+    });
+    document.getElementById("btn_mes").addEventListener("click",function(){
+        if($(this).hasClass('active')){
+            $(this).removeClass('active');
+            $("#frameCall").removeClass('col-9');
+            $("#frameCall").addClass('col-12');
+            $("#frameChat").css('display','none');
+        } else {
+            $(this).addClass('active');
+            $("#frameCall").removeClass('col-12');
+            $("#frameCall").addClass('col-9');
+            $("#frameChat").css('display','block');
+        }
+    });
+    document.getElementById("btn_closeShare").addEventListener("click",function(){
+        if($(this).hasClass('active')){
+            $(this).removeClass('active');
+            $("#btn_share").removeClass('active');
+        } else {
+            $(this).addClass('active');
+            $("#btn_share").removeClass('active');
+        }
+    });
+    
+</script>
+<script>
+    const chatForm = document.querySelector('#chat-form-call');
+    const chatMes = document.querySelector('#chat-mes-call');
+    const idRoom = chatForm.getAttribute('data-id');
+    const img = chatForm.getAttribute('data-img');
+    socket.emit('join-room-chat', idRoom);
+    chatForm.addEventListener('submit', (e)=>{
+        e.preventDefault();
+        if(chatMes.value != '')
+        {   
+            const data = {
+                "id":idUser,
+                "username" : username,
+                "img" : img,
+                "time": "",
+                "message": chatMes.value
+            }
+            socket.emit('on-chat-call', data, idRoom); 
+            chatMes.value = '';
+        }
+        
+    })
+
+    const messages = document.querySelector('#chatRealtimeCall');
+    socket.on('user-chat-call', (data) => {
+        const chatItem = document.createElement('div');
+        if(data.username == username)
+        {
+            chatItem.innerHTML = "<div class='detail_message_call darker'><img src="+data.img+" alt='Avatar' class='right'><span class='name-right'>"+data.username+"</span><p>"+data.message+"</p><span class='time-left'>"+data.time+"</span></div>";
+        }
+        else
+        {
+             chatItem.innerHTML = "<div class='detail_message_call'><img src="+data.img+" alt='Avatar'><span class='name-left'>"+data.username+"</span><p class='message-right'>"+data.message+"</p><br><br><span class='time-right'>"+data.time+"</span></div>";
+        }
+        messages.appendChild(chatItem);
+    })
+    socket.on('mang', (arr) => {
+        //console.log(arr);
+    })
+</script>

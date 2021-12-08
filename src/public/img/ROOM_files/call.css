@@ -1,0 +1,52 @@
+.video-call {
+  width: 100%;
+  height: 540px;
+  border: 2px solid red;
+  margin: 0;
+  overflow-y: auto;
+  padding: 1rem;
+}
+
+.container-video-call {
+  scroll-behavior: smooth;
+  overflow-x: visible;
+}
+
+.btn_fun {
+  margin: 5px 5px 0 5px;
+}
+
+.video-call {
+  display: block;
+  text-align: center;
+}
+
+.card_item {
+  width: 40%;
+  height: 40%;
+}
+
+.card_video {
+  display: inline-block;
+  height: 300px;
+  width: 300px;
+  position: relative;
+}
+
+.card_video video {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  object-fit: cover;
+  z-index: 0;
+}
+
+.card_video {
+  padding: 0;
+}
+
+.item-video {
+  padding: 0px !important;
+}
+
+/*# sourceMappingURL=call.css.map */

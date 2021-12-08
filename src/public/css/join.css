@@ -1,0 +1,100 @@
+.main-join {
+  height: 800px;
+  background: url(../img/join_meet.jpg) no-repeat center;
+  background-size: cover;
+}
+
+.avatar_join img {
+  width: 100px;
+  height: 100px;
+  border-radius: 50px;
+  margin-left: 50%;
+  transform: translate(-50%, 0%);
+  box-shadow: 2.6px 5.1px 5.1px rgba(0, 0, 0, 0.42);
+}
+
+.content_join {
+  text-align: center;
+  margin-left: 50%;
+  transform: translate(-50%, 0%);
+}
+
+.name-join {
+  font-family: math;
+  color: #228cee;
+}
+
+.join,
+.err_mes {
+  text-align: center;
+  margin-left: 50%;
+  transform: translate(-50%, 0%);
+}
+
+.title:hover {
+  background-color: #0c5599;
+}
+
+.title:active {
+  background-color: #0c5599;
+  text-decoration: underline;
+}
+
+.nav-item {
+  color: white;
+}
+
+.tab_active {
+  background-color: #0c5599;
+  border-radius: 5px;
+}
+
+.avatar,
+.input-ID {
+  margin-left: 50%;
+  transform: translate(-50%, 0%);
+}
+
+@media (max-width: 500px) {
+  .main-form {
+    width: 100%;
+  }
+
+  .avatar_join img {
+    width: 70px;
+    height: 70px;
+  }
+
+  .name-join {
+    font-size: 18px;
+  }
+
+  .name-user {
+    font-size: 18px;
+  }
+}
+@media (min-width: 500px) and (max-width: 700px) {
+  .main-form {
+    width: 70%;
+    /* text-align: center; */
+    margin-left: 50%;
+    transform: translate(-50%, 0%);
+  }
+
+  .name-join {
+    font-size: 22px;
+  }
+
+  .name-user {
+    font-size: 22px;
+  }
+}
+@media (min-width: 700px) {
+  .main-form {
+    width: 50%;
+    margin-left: 25%;
+    transform: translateX(-50%, -50%);
+  }
+}
+
+/*# sourceMappingURL=join.css.map */

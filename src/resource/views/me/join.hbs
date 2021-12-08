@@ -1,0 +1,49 @@
+<div class='main-join container-fluid w-100'>
+    <div class='main-form' style='background-color: rgb(204 204 204 / 90%);'>
+        <div class='form-join'>
+            <form action='/me/join' method='post' class='p-5'>
+                <div class='avatar_join'>
+                    <span>
+                        <img src={{user.img}} alt='avatar' />
+                    </span>
+                </div>
+                <br />
+                <div class='mb-3'>
+                    <h3 class='name-user text-center'>{{user.username}}</h3>
+                </div>
+                <div class='mb-3'>
+                    <h3 class='name-join text-center'>THAM GIA PHÒNG HỌP</h3>
+                </div>
+                 {{#if err}}
+                    <div class='err_mes alert alert-danger w-75' role='alert' text-align='center'>
+                        {{err}}
+                    </div>
+                {{/if}}
+                <div class='input-ID mb-3 w-75'>
+                    <label for='idRoom' class='form-label'>ID phòng họp:</label>
+                    <input
+                        type='text'
+                        class='form-control'
+                        id='idRoom'
+                        placeholder='Nhập ID phòng họp'
+                        name='id_Room'
+                        required
+                    />
+                </div>
+                <button type='submit' class='join btn btn-primary w-50'>Tham gia</button>
+                <br /><br />
+                <div class='content_join w-75'>
+                    Bằng cách nhấn vào
+                    <span style=' color: #4c7397'>"THAM GIA"</span>, bạn đã đồng
+                    ý
+                    <span style=' color: #4c7397'>điều khoản dịch vụ</span>
+                    và
+                    <span style=' color:#4c7397'>tuyên bố quyền riêng tư</span>
+                    của chúng tôi.
+                </div>
+            </form>
+
+        </div>
+    </div>
+
+</div>

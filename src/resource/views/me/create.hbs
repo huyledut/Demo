@@ -1,0 +1,36 @@
+<div class='container-create container-fluid w-100'>
+    <div class='main-create' style='background-color: rgb(204 204 204 / 90%);'>
+        <div class='form-create'>
+            <form action='/me/rooms/create' method='post' class='p-5'>
+                <div class='avatar-create'>
+                    <span>
+                        <img src='../img/messenger_logo.png' alt='avatar' />
+                    </span>
+                </div>
+                <br />
+                <div class='mb-3'>
+                    <h3 class='name-create text-center'>TẠO PHÒNG HỌP</h3>
+                </div>
+                 {{#if err}}
+                    <div class='alert alert-danger' role='alert' text-align='center'>
+                        {{err}}
+                    </div>
+                {{/if}}
+                <div class='input-ID mb-3 w-75'>
+                    <label for='idRoom' class='form-label'>Tên phòng họp:</label>
+                    <input
+                        type='text'
+                        class='form-control'
+                        id='idRoom'
+                        placeholder='Nhập tên phòng họp'
+                        name='ClassName'
+                        required
+                    />
+                </div>
+                <button type='submit' class='create btn btn-primary w-50'>Tạo phòng</button>
+               
+            </form>
+        </div>
+         <br /><br />
+    </div>
+</div>

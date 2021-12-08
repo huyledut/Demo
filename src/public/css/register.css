@@ -1,0 +1,107 @@
+.picture {
+  height: 600px;
+  background: url("../img/register_form.jpg") no-repeat center;
+  background-size: cover;
+  overflow: hidden;
+}
+
+.mb-3 input {
+  background-color: #e4e3e3;
+}
+
+.set2 {
+  display: none;
+}
+
+.btn-register,
+.icon {
+  text-align: center;
+  margin-left: 50%;
+  transform: translate(-50%, 0%);
+}
+
+.form-control {
+  border-radius: 15px;
+}
+
+.btn-register {
+  font-weight: bold;
+  background-color: #3c3ff5;
+  color: black;
+  border-radius: 50px;
+  border: 2px solid #030303;
+}
+
+.btn-register:hover,
+.btn-register:active {
+  background-color: blue;
+  color: white;
+}
+
+@media (max-width: 770px) {
+  .icon i {
+    font-size: 30px;
+  }
+}
+@media (max-width: 530px) {
+  .set1 {
+    display: none;
+  }
+
+  .set2 {
+    display: block;
+  }
+}
+.name-register {
+  font-family: math;
+  color: #228cee;
+}
+
+.title:hover {
+  background-color: #0c5599;
+}
+
+.title:active {
+  background-color: #0c5599;
+  text-decoration: underline;
+}
+
+.nav-item {
+  color: white;
+}
+
+.tab_active {
+  background-color: #0c5599;
+  border-radius: 5px;
+}
+
+@keyframes moveicon {
+  from {
+    transform: scale(1);
+  }
+  to {
+    transform: scale(1.25);
+  }
+}
+@keyframes movepicture {
+  from {
+    transform: scale(1);
+  }
+  to {
+    transform: scale(1.05);
+    opacity: 0.8;
+  }
+}
+.icon i:hover {
+  animation-name: moveicon;
+  animation-duration: 0.5s;
+  transition-timing-function: ease-out;
+}
+
+.picture:hover {
+  animation-name: movepicture;
+  animation-duration: 1s;
+  animation-iteration-count: infinite;
+}
+
+/*# sourceMappingURL=register.css.map */

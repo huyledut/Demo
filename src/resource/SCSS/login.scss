@@ -1,0 +1,108 @@
+.main-form {
+    position: relative;
+    top: 10%;
+    border-radius: 30px;
+}
+.main-login {
+    height: 800px;
+    background: url(../img/bg_login.jpg) no-repeat center;
+    background-size: cover;
+}
+.form-control,
+.btn {
+    border-radius: 30px;
+}
+
+@media (min-width: 200px) and (max-width: 500px) {
+    .main-form {
+        width: 100%;
+    }
+}
+@media (min-width: 500px) and (max-width: 700px) {
+    .main-form {
+        width: 70%;
+        /* text-align: center; */
+        margin-left: 50%;
+        transform: translate(-50%, 0%);
+    }
+}
+@media (min-width: 700px) {
+    .main-form {
+        width: 50%;
+        margin-left: 25%;
+        transform: translateX(-50%, -50%);
+    }
+}
+.avatar {
+    text-align: center;
+
+    margin-left: 50%;
+    transform: translate(-50%, 0%);
+}
+@media (max-width: 400px) {
+    .avatar i {
+        font-size: 70px;
+    }
+}
+.name-login {
+    font-family: math;
+    color: rgb(34, 140, 238);
+}
+.avatar i {
+    color: rgb(34, 140, 238);
+}
+.title:hover {
+    background-color: rgb(12, 85, 153);
+}
+.title:active {
+    background-color: rgb(12, 85, 153);
+    text-decoration: underline;
+}
+.nav-item {
+    color: white;
+}
+.tab_active {
+    background-color: rgb(12, 85, 153);
+    border-radius: 5px;
+}
+.forgotpw {
+    text-align: center;
+}
+.forgotpw a {
+    text-decoration: none;
+}
+.forgotpw a:hover {
+    text-decoration: underline;
+}
+.forgotpw a:active {
+    text-decoration: underline rgb(241, 61, 85);
+}
+.register {
+    text-align: center;
+}
+.register a {
+    text-decoration: none;
+}
+.register a:hover {
+    text-decoration: underline;
+}
+.register a:active {
+    text-decoration: underline rgb(241, 61, 85);
+}
+@keyframes move {
+    from {
+        transform: scale(1);
+        color: rgb(34, 140, 238);
+    }
+    to {
+        transform: scale(1.25);
+        color: yellow;
+    }
+}
+.register {
+    animation-name: move;
+    animation-duration: 2s;
+    animation-iteration-count: infinite;
+    /* position: absolute; */
+    /* padding: 10px; */
+}

@@ -1,0 +1,84 @@
+.video-call {
+    width: 100%;
+    height: 540px;
+    border: 2px solid #005cff;
+    margin: 0;
+    overflow-y: auto;
+    padding: 1rem;
+}
+.container-video-call {
+    scroll-behavior: smooth;
+    overflow-x: visible;
+}
+.btn_fun {
+    margin: 5px 5px 0 5px;
+}
+.video-call {
+    display: block;
+    text-align: center;
+}
+.chatRealtime
+{
+    height: 470px;
+    overflow: auto;
+    border:1px solid rgb(218, 224, 218);
+    border-radius: 10px;
+    box-shadow: 0px 2px 4px 0px rgba(0, 0, 0, 0.12);
+    box-sizing: border-box;
+}
+.card_item {
+    width: 40%;
+    height: 40%;
+}
+.card_video {
+    display: inline-block;
+    height: 300px;
+    width: 300px;
+    position: relative;
+}
+
+.card_video video {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    object-fit: cover;
+    z-index: 0;
+}
+.card_video {
+    padding: 0;
+}
+.item-video {
+    padding: 0px !important;
+}
+
+.detail_message_call {
+    border: 2px solid #feffff;
+    background-color: #f9fafc;
+    border-radius: 20px;
+    padding: 10px;
+    margin: 10px 0;
+}
+
+/* Clear floats */
+.detail_message_call::after {
+    content: '';
+    clear: both;
+    display: table;
+}
+
+/* Style images */
+.detail_message_call img {
+    float: left;
+    max-width: 40px;
+    max-height: 40px;
+    width: 100%;
+    margin-right: 20px;
+    border-radius: 50%;
+}
+
+/* Style the right image */
+.detail_message_call img.right {
+    float: right;
+    margin-left: 20px;
+    margin-right: 0;
+}

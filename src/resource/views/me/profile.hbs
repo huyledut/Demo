@@ -1,0 +1,97 @@
+<body style="background:url('../img/bg_profile.jpg') no-repeat; background-size: 100%; height: auto;">
+<div class="container mt-5 text-center">
+</div>
+<div class="container mb-5">
+    <div class="row mt-3">
+        <div class="col-6 d-flex align-items-center justify-content-center">
+            <div>
+                <div class="container">
+                    <div class="avatar-upload">
+                        <div class="avatar-edit">
+                            <input type='file' id="imageUpload" accept=".png, .jpg, .jpeg"/>
+                            <label for="imageUpload"></label>
+                        </div>
+                        <div class="avatar-preview">
+                            <div id="imagePreview" style="background-image: url({{user.img}});">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-6" >
+            
+            <form class="mt-4 p-5 form_profile" style="background-color: #cfcbc5; opacity: 0.8;" method="post" action="/me/profile?_method=put">
+                    <h3 class="text-center">HỒ SƠ</h3>
+                    {{#if err}}
+                        <div class='err_mes alert alert-danger w-75' role='alert' text-align='center'>
+                            {{err}}
+                        </div>
+                    {{/if}}
+                    {{#if success}}
+                        <div class='err_mes alert alert-success w-75' role='alert' text-align='center'>
+                        {{success}}
+                        </div>
+                    {{/if}}
+                <div class="mb-3">
+                    <label for="inputUser" class="form-label">Tên đăng nhập</label>
+                    <br>
+                    <input type="text" class="form-control" id="inputUser"
+                    required value="{{user.username}}" readonly>
+                </div>
+                 <div class="mb-3">
+                    <label for="inputUser" class="form-label">Tên</label>
+                    <br>
+                    <input type="text" class="form-control" id="inputUser" name="firstName" 
+                    required value="{{user.firstName}}">
+                </div>
+                 <div class="mb-3">
+                    <label for="inputUser" class="form-label">Họ và tên đệm</label>
+                    <br>
+                    <input type="text" class="form-control" id="inputUser"  name="lastName" 
+                    required value="{{user.lastName}}">
+                </div>
+                <div class="input-group mb-3">
+                       <label for="inputpass" class="form-label">Mật khẩu</label>
+                </div>
+                <div class="input-group mb-3">
+                        <input type="password" class="form-control" aria-label="Recipient's username" aria-describedby="button-addon2"
+                            value={{user.password}}
+                        readonly>
+                        <button class="btn btn-primary" type="button" data-bs-toggle="modal" data-bs-target="#changePass">Thay đổi</button>
+                </div>
+                <button type="submit" class="btn btn-primary btnCreateRoom">CẬP NHẬT</button>
+            </form>
+        </div>
+    </div>
+</div>
+<br><br>
+
+<div class="modal fade" id="changePass" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+            <div class="modal-content">
+                {{!-- form update password --}}
+        <form action="/me/profile" method="post" >
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Thay đổi mật khẩu</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="input-group mb-3 mt-3">
+                    <span class="input-group-text btn-primary w-25" id="passNew" >Mật khẩu</span>
+                    <input type="password" class="form-control" aria-label="Sizing example input" aria-describedby="passNew" name="password">
+                </div>
+                <div class="input-group mb-3 mt-3">
+                    <span class="input-group-text btn-primary w-25" id="passRepeat">Nhập lại</span>
+                    <input type="password" class="form-control" aria-label="Sizing example input" aria-describedby="passRepeat" name="password_rp">
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="submit" class="btn btn-primary">Cập nhật mật khẩu</button>
+                <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
+            </div>
+        </form>
+            </div>                                
+    </div>
+</div>
+</body>

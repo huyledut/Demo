@@ -1,0 +1,78 @@
+.form-create {
+    padding: 10px;
+    border-radius: 10px;
+    height: 400px;
+}
+.btnCreateRoom {
+    text-align: center;
+    display: block;
+    margin: auto;
+}
+.container-create {
+    height: 800px;
+    background: url(../img/create_room.jpg) no-repeat center;
+    background-size: cover;
+}
+.main-create {
+    position: relative;
+    top: 10%;
+    border-radius: 30px;
+}
+.avatar-create img {
+    width: 100px;
+    height: 100px;
+    border-radius: 50px;
+    margin-left: 50%;
+    transform: translate(-50%, 0%);
+    box-shadow: 2.6px 5.1px 5.1px hsl(0deg 0% 0% / 0.42);
+}
+.name-create {
+    font-family: math;
+    color: rgb(34, 140, 238);
+}
+.avatar,
+.input-ID {
+    margin-left: 50%;
+    transform: translate(-50%, 0%);
+}
+.create {
+    text-align: center;
+    margin-left: 50%;
+    transform: translate(-50%, 0%);
+}
+@media (max-width: 500px) {
+    .main-create {
+        width: 100%;
+    }
+    .avatar-create img {
+        width: 70px;
+        height: 70px;
+    }
+    .name-create {
+        font-size: 18px;
+    }
+    .name-user {
+        font-size: 18px;
+    }
+}
+@media (min-width: 500px) and (max-width: 700px) {
+    .main-create {
+        width: 70%;
+        /* text-align: center; */
+        margin-left: 50%;
+        transform: translate(-50%, 0%);
+    }
+    .name-create {
+        font-size: 22px;
+    }
+    .name-user {
+        font-size: 22px;
+    }
+}
+@media (min-width: 700px) {
+    .main-create {
+        width: 50%;
+        margin-left: 25%;
+        transform: translateX(-50%, -50%);
+    }
+}

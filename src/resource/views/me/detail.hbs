@@ -1,0 +1,347 @@
+<script>
+    userID="{{user._id}}";
+</script>
+<div class="container-fluid mt-3 text-center ">
+    <div class="row">
+        <div class="col-3">
+             <a href="/me/rooms"><button type="button" class="btn_restore btn btn-outline-primary">Quay lại</button></a>
+        </div>
+        <div class="col-6"><h3>Chào bạn đến với "{{room.ClassName}}" </h3> </div>
+        <div class="col-3">
+            {{!-- OUT ICON --}}
+            <a href="#">
+                <button type="button" class="btn_leave btn btn-outline-danger"  title="Leave" data-bs-toggle="modal" data-bs-target="#OutRoom" data-id='{{idRoom}}'>
+                    <i class="fas fa-sign-out-alt fa-lg"></i>
+                </button>
+                <form action="/me/rooms/{{idRoom}}?_method=Delete" method="post" >
+                    <div class="modal fade" id="OutRoom" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                        <div class="modal-header text-black">
+                            <h5 class="modal-title" id="exampleModalLabel">Xác nhận rời phòng</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="submit" class="btn btn-danger">Chấp nhận</button>
+                            <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Đóng</button>                         
+                        </div>
+                        </div>
+                    </div>
+                    </div>
+                </form>
+            </a >
+            {{!-- SHOW LIST ICON --}}
+            <a href="#">
+                <button type="button" class="btn_showList btn btn-outline-primary" title="Show List Member" data-bs-toggle="modal" data-bs-target="#ShowList">
+                    <i class="fas fa-list fa-lg"></i>
+                </button>
+                <div class="modal fade" id="ShowList" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class=" modal-dialog  ">
+                        <div class="modal-content">
+                        <div class="modal-header text-black" id="modal-header">
+                            {{!-- <h5 class="modal-title text-center" id="exampleModalLabel"><button>Danh sách thành viên </button></h5> --}}
+                            <button type="button" class="modal-title  btn btn-outline-primary active" id="btnlistMember">Danh sách thành viên </button>
+                            <button type="button" class="modal-title  btn btn-outline-primary" id="btnlistAdmin">Quản trị viên </button>
+                            {{!-- <h5 class="modal-title text-center" id="exampleModalLabel">Quản trị viên</h5> --}}
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div  class="modal-content modal-body" data-members={{members}} data-admins={{admins}} id="listMember" > 
+                            {{#if isAdmin}}
+                                {{#each admins}}
+                                    <div class='detail_member'>
+                                        <img src="{{this.img}}" alt='Avatar' class='left'>
+                                        <span class='name-left'>{{this.username}}</span>
+                                        {{#if this.isActive}}
+                                            <span><div style="width: 10px;height : 10px; background-color:green;border-radius: 50px;"></div> </span>
+                                        {{/if}}
+                                        <br>
+                                        <button type="submit" class="btn_delete_member btn btn-primary">Quản trị viên</button> 
+                                    </div>
+                                {{/each}}  
+                                {{#each members}}
+                                    <div class='detail_member'>
+                                        <img src="{{this.img}}" alt='Avatar' class='left'>
+                                        <span class='name-left'>{{this.username}}</span>
+                                        {{#if this.isActive}}
+                                            <span><div style="width: 10px;height : 10px; background-color:green;border-radius: 50px;"></div> </span>
+                                        {{/if}}
+                                        <br>
+                                        <form action="/me/rooms/deleteMember?idUser={{this._id}}&idRoom={{../idRoom}}&_method=delete" method="post">
+                                        <button type="submit" class="btn_delete_member btn btn-outline-danger">Xóa</button>
+                                        </form>
+                                        <form action="/me/rooms/setAdmin?idUser={{this._id}}&idRoom={{../idRoom}}&_method=patch" method="post" >
+                                            <button type="submit" class="btn_add_admin btn btn-outline-primary">Thêm quản trị viên</button>         
+                                        </form>
+                                    </div>
+                                {{/each}} 
+                            {{else}}
+                                    {{#each admins}}
+                                        <div class='detail_member'>
+                                            <img src="{{this.img}}" alt='Avatar' class='left'>
+                                            <span class='name-left'>{{this.username}}</span>
+                                            {{#if this.isActive}}
+                                                <span><div style="width: 10px;height : 10px; background-color:green;border-radius: 50px;"></div> </span>
+                                            {{/if}}
+                                            <br>
+                                            <button type="submit" class="btn_delete_member btn btn-primary">Quản trị viên</button> 
+                                        </div>
+                                    {{/each}} 
+                                    {{#each members}}
+                                        <div class='detail_member'>
+                                            <img src="{{this.img}}" alt='Avatar' class='left'>
+                                            <span class='name-left'>{{this.username}}</span>
+                                            {{#if this.isActive}}
+                                                <span><div style="width: 10px;height : 10px; background-color:green;border-radius: 50px;"></div> </span>
+                                            {{/if}}
+                                        </div>
+                                    {{/each}} 
+                            {{/if}}  
+                        </div>
+                        <div  class="modal-content modal-body" id="listAdmin" style="display:none">
+                            {{#if isAdmin}}
+                                {{#each admins}}
+                                    <div class='detail_member'>
+                                        <img src="{{this.img}}" alt='Avatar' class='left'>
+                                        <span class='name-left'>{{this.username}}</span>
+                                        {{#if this.isActive}}
+                                            <span><div style="width: 10px;height : 10px; background-color:green;border-radius: 50px;"></div> </span>
+                                        {{/if}}
+                                        <br>
+                                        <form action="/me/rooms/outAdmin?idUser={{this._id}}&idRoom={{../idRoom}}&_method=delete" method="post">
+                                        <button type="submit" class="btn_delete_member btn btn-danger">Xóa</button>
+                                        </form>
+                                        <button type="button" class="btn_delete_member btn btn-primary">Quản trị viên</button> 
+                                    </div>           
+                                {{/each}} 
+                            {{else}}
+                                {{#each admins}}
+                                    <div class='detail_member'>
+                                        <img src="{{this.img}}" alt='Avatar' class='left'>
+                                        <span class='name-left'>{{this.username}}</span>
+                                        {{#if this.isActive}}
+                                            <span><div style="width: 10px;height : 10px; background-color:green;border-radius: 50px;"></div> </span>
+                                        {{/if}}
+                                        <br>
+                                        <button type="submit" class="btn_delete_member btn btn-primary">Quản trị viên</button>  
+                                    </div>           
+                                {{/each}}
+                            {{/if}}         
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Đóng</button>                         
+                        </div>
+                        </div>
+                    </div>
+                </div> 
+            </a>
+            {{!-- EDIT ICON --}}
+            <a href="#">
+                <button type="button" class="btn_edit btn btn-outline-primary" title="Edit" data-bs-toggle="modal" data-bs-target="#EditRoom">
+                    <i class="fas fa-edit fa-lg"></i>
+                </button>
+                <form action="/me/rooms/{{idRoom}}?_method=put" method="post" >
+                    <div class="modal fade" id="EditRoom" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                        <div class="modal-header text-black">
+                            <h5 class="modal-title text-center" id="exampleModalLabel">Cập nhật thông tin phòng học</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div  class="modal-content" >
+                            <div class="input-group mb-3 mt-3">
+                                <span class="input-group-text btn-primary" id="nameRoom" >Tên phòng họp</span>
+                                <input type="text" class="form-control" aria-label="Sizing example input" aria-describedby="nameRoom"  name="ClassName" value="{{room.ClassName}}">
+                            </div>
+                            <div class="text-center">
+                                <div class='card card_room w-50'>
+                                            <img
+                                                id='picROOM'
+                                                src='{{room.img}}'
+                                                class='card-img-top'
+                                                alt='{{room.ClassName}}'
+                                                name="img"
+                                            />
+                                </div>
+                                <br>
+                                <button type="button" class="btn btn-outline-primary mt-2 mb-2" onclick="ChangePic()">Thay đổi</button>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="submit" class="btn btn-primary">Cập nhật thông tin</button>
+                            <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Đóng</button>                         
+                        </div>
+                        </div>
+                    </div>
+                    </div>
+                </form>
+            </a>
+            {{!-- CALL ICON --}}
+            <a href="/me/rooms/call/{{idRoom}}" target="_blank">
+                <button type="button" class="btn_call btn btn-outline-primary" title="Video Call">
+                    <i class="fas fa-video fa-lg"></i>
+                </button>
+            </a>
+            <!-- Button trigger modal -->
+        </div>
+    </div>
+</div>
+<hr>
+
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-3">
+            <h3>{{room.ClassName}}</h3>
+            <hr>
+            <div class='card card_room'>
+                        <img
+                            src='{{room.img}}'
+                            class='card-img-top'
+                            alt='{{room.ClassName}}'
+                        />
+            </div>
+            <br>
+            <br>
+            <div class="input-group mb-3">
+                <input type="text" class="form-control" placeholder="Hiện ID ROOM" id="id_show"
+                    aria-label="Recipient's username" aria-describedby="button-addon2" value="">
+                <button class="btn btn-outline-primary" id="btn_show" data-idroom = '{{idRoom}}'>Hiện</button>
+            </div>
+            <p class="text-center">{{room.count}} thành viên</p>
+        </div>
+        
+        <div class="col-9">
+            <div class="content_message" id="messages">
+                {{!-- show message from data --}}
+                    {{#each content}}
+                        {{#if (eq this.user.username ../user.username)}}
+                            <div class='detail_message darker'>
+                                <img src="{{this.user.img}}" alt='Avatar' class='right'>
+                                <span class='name-right'>{{this.user.username}}</span>
+                                <p>{{this.title}}</p>
+                                <span class='time-left'>{{this.time}}</span>
+                            </div>
+                        {{else}}
+                            <div class='detail_message'>
+                                <img src="{{this.user.img}}" alt='Avatar'>
+                                <span class='name-left'>{{this.user.username}}</span>
+                                <p class='message-right'>{{this.title}}</p>
+                                <br><br>
+                                <span class='time-right'>{{this.time}}</span>
+                            </div>
+                        {{/if}}
+                    {{/each}}
+                {{!-- /show message from data --}}
+            </div>
+            <br>
+            {{!-- Input enter message --}}
+            <div class="input-group mb-3"> 
+               <form id="chat-form" data-id='{{idRoom}}' class="input-group mb-3">
+                    <input type="text" class="form-control" placeholder="Nhập tin nhắn ..." aria-label="Recipient's username" 
+                        aria-describedby="button-addon2" id="chat-mes" autofocus>
+                    <button class="btn btn-outline-primary" id="send-chat" 
+                        data-name='{{user.username}}' data-img ='{{user.img}}'>GỬI</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="/socket.io/socket.io.js"></script>
+<script>
+     document.getElementById("btn_show").addEventListener("click",function(){
+        if($(this).hasClass('active')){
+            $(this).removeClass('active');
+            document.getElementById("id_show").value ="";
+        } else {
+            $(this).addClass('active');
+            document.getElementById("id_show").value = $(this).attr("data-idroom");
+            
+        }
+    });
+</script>
+
+{{!-- chat socket client--}}
+<script>
+    const chatForm = document.querySelector('#chat-form');
+    const idRoom = chatForm.getAttribute('data-id');
+    const socket = io();
+    socket.emit('join-room-chat', idRoom);
+    const chatMes = document.querySelector('#chat-mes');
+    const nameUser = document.getElementById('send-chat').getAttribute('data-name');
+    const img = document.getElementById('send-chat').getAttribute('data-img');
+    const d = new Date();
+    let hour = d.getHours();
+    let minute = d.getMinutes();
+    chatForm.addEventListener('submit', (e)=>{
+        e.preventDefault();
+        if(chatMes.value != '')
+        {   
+            
+            const data = {
+                "id":userID,
+                "username" : nameUser,
+                "img" : img,
+                "time": hour + ":" + minute,
+                "message": chatMes.value
+            }
+            const message = nameUser + "ROOM" + chatMes.value;
+            socket.emit('on-chat', data, idRoom); 
+            chatMes.value = '';
+        }
+        
+    })
+
+    const messages = document.querySelector('#messages');
+    socket.on('user-chat', (data) => {
+        const chatItem = document.createElement('div');
+        if(data.username == nameUser)
+        {
+            chatItem.innerHTML = "<div class='detail_message darker'><img src="+data.img+" alt='Avatar' class='right'><span class='name-right'>"+data.username+"</span><p>"+data.message+"</p><span class='time-left'>"+data.time+"</span></div>";
+        }
+        else
+        {
+             chatItem.innerHTML = "<div class='detail_message'><img src="+data.img+" alt='Avatar'><span class='name-left'>"+data.username+"</span><p class='message-right'>"+data.message+"</p><br><br><span class='time-right'>"+data.time+"</span></div>";
+        }
+        messages.appendChild(chatItem);
+    })
+    socket.on('mang', (arr) => {
+        console.log(arr);
+    })
+
+    
+</script>
+<script>
+    avatarRoom = [
+    'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSaU5fqJhHfX27Pyy_CYqEnK0y-rfjo3fXCJ617RGlqcsYrL6G2_B75Ml8w5VolEDPpEz8&usqp=CAU',
+    'https://freedesignfile.com/upload/2018/08/Creative-family-logos-vector-material-02.jpg',
+    'https://st2.depositphotos.com/1069290/5358/v/950/depositphotos_53581759-stock-illustration-book-icon-vector-logo.jpg',
+    'https://us.123rf.com/450wm/antoshkaforever/antoshkaforever1107/antoshkaforever110700039/9929349-symbol-of-friendship-icon-happy-friends-vector-sign-.jpg?ver=6'];
+    i=-1;
+    function ChangePic() {
+        i++;
+        const  pic = document.getElementById("picROOM");
+        pic.src = avatarRoom[i%avatarRoom.length];
+    }
+    var btnContainer = document.getElementById("modal-header");
+
+    var btns = btnContainer.getElementsByClassName("btn");
+
+    for (var i = 0; i < btns.length; i++) {
+    btns[i].addEventListener("click", function() {
+        var current = document.getElementsByClassName("active");
+        current[0].className = current[0].className.replace(" active", "");
+        this.className += " active";
+    });
+    }
+    document.getElementById("btnlistMember").addEventListener("click",function(){
+        document.getElementById("listMember").style.display = "block";
+        document.getElementById("listAdmin").style.display = "none";
+    });
+    document.getElementById("btnlistAdmin").addEventListener("click",function(){
+        document.getElementById("listMember").style.display = "none";
+        document.getElementById("listAdmin").style.display = "block";
+    });
+</script>
+
+

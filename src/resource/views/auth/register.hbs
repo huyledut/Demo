@@ -1,0 +1,80 @@
+<body>
+    <section class='set1 container' style='height: 650px;'>
+        <div class='row mt-5 mb-5'>
+            <div class='col-6'>
+                <div class='picture w-100'>
+                </div>
+            </div>
+            <div class='col-6'>
+                <div class='mb-3'>
+                    <h2 class='name-register text-center'>ĐĂNG KÝ TÀI KHOẢN</h2>
+                </div>
+                {{#if err}}
+                    <div class='alert alert-danger' role='alert'>
+                        {{err}}
+                    </div>
+                {{/if}}
+                <form action='/auth/register' method='post'>
+                    <div class='mb-3'>
+                        <label for='pwd' class='form-label'>Tên người dùng:</label>
+                        <input
+                            type='text'
+                            class='form-control'
+                            id='nameUser'
+                            placeholder='Nhập tên người dùng'
+                            name='username'
+                            required
+                        />
+                    </div>
+                    <div class='mb-3'>
+                        <label for='pwd' class='form-label'>Mật khẩu:</label>
+                        <input
+                            type='password'
+                            class='form-control'
+                            id='pwd'
+                            placeholder='Nhập mật khẩu'
+                            name='password'
+                            required
+                        />
+                    </div>
+                    <div class='mb-3'>
+                        <label for='pswd_repeat' class='form-label'>Mật khẩu:</label>
+                        <input
+                            type='password'
+                            class='form-control'
+                            id='pswd_repeat'
+                            placeholder='Nhập lại mật khẩu'
+                            name='password_rp'
+                            required
+                        />
+                    </div>
+                    <br />
+                    <button type='submit' class='btn-register btn w-50'>Đăng ký</button>
+                </form>
+                <div class='icon container mt-5'>
+                    <i
+                        class='fab fa-facebook fa-3x'
+                        style='color: rgb(8, 8, 102);'
+                    ></i>
+                    <i
+                        class='fab fa-instagram fa-3x ms-2'
+                        style='color: rgb(245, 6, 77);'
+                    ></i>
+                    <i
+                        class='fab fa-google-plus fa-3x ms-2'
+                        style='color: rgb(34, 140, 238);'
+                    ></i>
+                    <i
+                        class='fab fa-twitter fa-3x ms-2'
+                        style='color: rgb(34, 116, 238);'
+                    ></i>
+                    <i
+                        class='fab fa-linkedin fa-3x ms-2'
+                        style='color: blue;'
+                    ></i>
+                </div>
+
+            </div>
+        </div>
+    </section>
+</body>

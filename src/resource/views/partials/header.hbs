@@ -1,0 +1,105 @@
+<nav class='navbar navbar-expand-lg navbar-dark bg-primary'>
+    <div class='container-fluid'>
+        <a class='navbar-brand ms-lg-5' href='/home'>ROOM</a>
+        <button
+            class='navbar-toggler'
+            type='button'
+            data-bs-toggle='collapse'
+            data-bs-target='#navbarSupportedContent'
+            aria-controls='navbarSupportedContent'
+            aria-expanded='false'
+            aria-label='Toggle navigation'
+        >
+            <span class='navbar-toggler-icon'></span>
+        </button>
+        
+        <div class='collapse navbar-collapse ms-5' id='navbarSupportedContent'>
+            <ul class='navbar-nav nav-pills me-auto mb-2 mb-lg-0' id='menu_tab'>
+                <li class='nav-item ms-3'>
+                    <a
+                        class='title nav-link text-white'
+                        aria-current='page'
+                        href='/home'
+                    >Trang chủ</a>
+                    <span></span>
+                </li>
+                {{!-- <li class='nav-item ms-3'>
+                    <a
+                        class='title nav-link text-white'
+                        aria-current='page'
+                        href='/me/profile'
+                    >Cá nhân</a>
+                    <span></span>
+                </li> --}}
+                 <li class='nav-item ms-3'>
+                    <a
+                        class='title nav-link text-white'
+                        aria-current='page'
+                        href='/me/rooms'
+                    >Phòng họp của tôi</a>
+                    <span></span>
+                </li>
+                  <li class='nav-item ms-3'>
+                    <a
+                        class='title nav-link text-white'
+                        aria-current='page'
+                        href='/me/create'
+                    >Tạo phòng họp</a>
+                    <span></span>
+                </li>
+                <li class='nav-item ms-3'>
+                    <a
+                        class='title nav-link text-white'
+                        aria-current='page'
+                        href='/me/join'
+                    >Tham gia phòng họp</a>
+                    <span></span>
+                </li> 
+                {{#if login}}
+                    
+                {{else}}
+                    <li class='nav-item ms-3'>
+                        <a
+                            class='title nav-link text-white'
+                            aria-current='page'
+                            href='/auth/login'
+                        >Đăng nhập</a>
+                        <span></span>
+                    </li>
+                    <li class='nav-item ms-3'>
+                        <a
+                            class='title nav-link text-white'
+                            aria-current='page'
+                            href='/auth/register'
+                        >Đăng ký</a>
+                        <span></span>
+                    </li>                   
+                {{/if}}           
+            </ul>
+            {{#if login}}
+                <div class='nav-item ms-3'  style='padding:0; margin:0;' >
+                        <img src="{{user.img}}" class="avatar-header me-2" alt="">
+                </div>
+            {{/if}}
+            <ul class='navbar-nav nav-pills me-auto mb-2 mb-lg-0' id='menu_tab'>
+            {{#if login}}
+                    <li class='nav-item ms-3'>
+                        <a  class='title nav-link text-white'
+                            aria-current='page'
+                            href='/me/profile'
+                        >
+                            {{user.username}}
+                        </a>
+                    </li>
+                    <li class='nav-item ms-3'style="display:block;right:0;">
+                        <a  class='title nav-link text-white'
+                            aria-current='page'
+                            href='/auth/logout'
+                        >Đăng xuất</a>
+                        <span></span>
+                    </li>      
+            {{/if}}         
+            </ul>
+        </div>
+    </div>
+</nav>  

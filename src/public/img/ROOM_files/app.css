@@ -1,0 +1,44 @@
+body {
+  font: 100% Helvetica, sans-serif;
+  color: black;
+  font-weight: 100;
+  scroll-behavior: smooth;
+}
+
+.user-avatar {
+  height: 38px;
+  width: 38px;
+  border-radius: 50%;
+  margin-right: 4px;
+}
+
+.card {
+  text-align: center;
+  padding: 3rem;
+  display: inline-block;
+  margin: 5px;
+  border-radius: 20px;
+  box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 6px -1px, rgba(0, 0, 0, 0.06) 0px 2px 4px -1px;
+  box-sizing: border-box;
+}
+
+.card:hover {
+  color: red;
+  box-shadow: rgba(60, 64, 67, 0.3) 2px 4px 6px 2px, rgba(60, 64, 67, 0.15) 0px 1px 3px 1px;
+}
+
+.card a {
+  margin-bottom: 0;
+}
+
+.container h3 {
+  font-family: math;
+  color: #228cee;
+}
+
+.nav_item {
+  z-index: 1000;
+  background-color: red;
+}
+
+/*# sourceMappingURL=app.css.map */
