@@ -22,9 +22,9 @@ app.use(express.json()); //gui tu code js thi nhan tu thang json
 app.engine('hbs', handlebars({ extname: 'hbs', helpers: hbs_Helper.helpers }));
 app.use(cookieParser('Hello World'));
 app.use(bodyParser.urlencoded({ extended: true }));
-app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.static(path.join(__dirname, 'src/public')));
 app.set('view engine', 'hbs');
-app.set('views', path.join(__dirname, 'resource', 'views'));
+app.set('views', path.join(__dirname, 'src/resource', 'views'));
 app.use(methodOverride('_method'));
 app.use('/peer', peerServer);
 db.connect();
