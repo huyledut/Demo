@@ -1,5 +1,4 @@
 const mongoose = require('mongoose');
-const slug = require('mongoose-slug-generator');
 const mongoose_delete = require('mongoose-delete');
 const user = require('../models/User');
 
