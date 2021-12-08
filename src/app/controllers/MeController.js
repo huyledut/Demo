@@ -220,7 +220,8 @@ class MeController {
                 idRoom: req.params.slug,
                 user: dbHelperToObject(user),
                 userID: req.signedCookies.userID,
-                listCall: dbHelperToListObject(room.Calling)
+                listCall: dbHelperToListObject(room.Calling),
+                port : process.env.PORT || 3002
             });
         })
             .catch(next);
