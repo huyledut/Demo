@@ -4,7 +4,7 @@ const Message = require('../models/Message');
 const {
     dbHelperToObject,
     dbHelperToListObject,
-} = require('../util/dbHelper');
+} = require('../../util/dbHelper');
 class MessageController {
     async pushMessage(idRoom, data) {
         try {

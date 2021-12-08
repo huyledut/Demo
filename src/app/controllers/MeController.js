@@ -5,11 +5,11 @@ const Room = require('../models/Room');
 const {
     dbHelperToObject,
     dbHelperToListObject,
-} = require('../util/dbHelper');
+} = require('../../util/dbHelper');
 
 const {
    toMembers
-} = require('../util/toMembers');
+} = require('../../util/toMembers');
 class MeController {
     //[GET] /me/stored/courses
     storedCourses(req, res, next) {

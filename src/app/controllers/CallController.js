@@ -3,7 +3,7 @@ const Room = require('../models/Room');
 const {
     dbHelperToObject,
     dbHelperToListObject,
-} = require('../util/dbHelper');
+} = require('../../util/dbHelper');
 class CallController {
     async pushCall(idRoom, idUser) {
         try {

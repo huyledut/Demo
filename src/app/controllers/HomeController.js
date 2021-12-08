@@ -2,7 +2,7 @@ const User = require('../models/User');
 const {
     dbHelperToObject,
     dbHelperToListObject,
-} = require('../util/dbHelper');
+} = require('../../util/dbHelper');
 class HomeController {
     index(req, res) {
         User.findOne({ _id: req.signedCookies.userID })
