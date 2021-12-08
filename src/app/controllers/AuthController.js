@@ -4,7 +4,7 @@ const bcrypt = require('bcrypt');
 const {
     dbHelperToObject,
     dbHelperToListObject,
-} = require('../../util/dbHelper');
+} = require('../util/dbHelper');
 class AuthController {
     login(req, res, next) {
         res.render('../../resource/views/auth/login.hbs');

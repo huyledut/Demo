@@ -2,7 +2,7 @@
 const {
     dbHelperToObject,
     dbHelperToListObject,
-} = require('../../util/dbHelper');
+} = require('../util/dbHelper');
 class MeetController {
     join(req, res) {
         res.render('../../resource/views/meet/join.hbs');

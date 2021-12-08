@@ -3,7 +3,7 @@ const Room = require('../models/Room');
 const {
     dbHelperToObject,
     dbHelperToListObject,
-} = require('../../util/dbHelper');
+} = require('../util/dbHelper');
 
 module.exports.requireLogin = function (req, res, next) {
     if (!req.signedCookies) {
