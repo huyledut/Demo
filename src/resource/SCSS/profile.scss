@@ -59,3 +59,20 @@
 .form_profile {
     border-radius: 50px;
 }
+.profilev2
+{
+    display: none;
+}
+@media (max-width: 770px) {
+    .profilev2 {
+        display:block;
+    }
+    .profilev1 {
+        display:none;
+    }
+}
+.main-profile
+{
+    background: url(../img/bg_profile.jpg) no-repeat center;
+    background-size: cover;
+}

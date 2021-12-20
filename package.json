@@ -20,14 +20,15 @@
   },
   "homepage": "https://github.com/huyledut/nodejs#readme",
   "dependencies": {
+    "bcrypt": "^5.0.1",
+    "body-parser": "^1.19.0",
     "cookie-parser": "^1.4.5",
     "express": "^4.17.1",
     "express-handlebars": "^5.3.4",
     "method-override": "^3.0.0",
+    "mongoose": "^6.1.2",
     "mongoose-delete": "^0.5.4",
-    "bcrypt": "^5.0.1",
     "peer": "^0.6.1",
-    "body-parser": "^1.19.0",
     "socket.io": "^4.4.0"
   },
   "devDependencies": {
@@ -39,5 +40,5 @@
   },
   "engines": {
     "node": "17.x"
- }
+  }
 }
