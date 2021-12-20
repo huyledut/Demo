@@ -132,7 +132,6 @@ class MeController {
                         });
                     })
                     .catch(next);
-                next();
             });
     }
     rooms(req, res, next) {

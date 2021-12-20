@@ -28,7 +28,7 @@ app.set('views', path.join(__dirname, 'src/resource', 'views'));
 app.use(methodOverride('_method'));
 app.use('/peer', peerServer);
 db.connect();
-room.findOne({ ClassName: '19TCLCDT4' }).then(function (room) {});
+// room.findOne({ ClassName: '19TCLCDT4' }).then(function (room) {});
 route(app);
 socketController.start(io);
 server.listen(port, () => {
