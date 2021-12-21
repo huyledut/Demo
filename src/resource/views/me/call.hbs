@@ -109,7 +109,7 @@
     }).then((stream) => {
         myVideoStream = stream;	
         addVideoStream(myVideo, stream, username);
-
+        muteAudio(username);
         socket.on("user-connected", (node) => {
             connectToNewUser(node.peerId, stream, node.username);
             if (isShareScreen) {
@@ -201,6 +201,14 @@
         videoGrids.append(videoGrid);
         RemoveUnusedDivs();
     };
+    
+    const muteAudio = function(name){
+        const str = '[class="' +name+' card item-video"] video';
+        try {
+            document.querySelector(str).muted = true;
+        }
+        catch(e){};
+    }
 
     const removeVideoStream = (name) => {
         var list_div_video = document.getElementsByClassName(name);
